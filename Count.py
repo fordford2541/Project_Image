@@ -14,7 +14,7 @@ def conventImage(Image):
     #canny = cv2.Laplacian(canny,cv2.CV_64FC4)
     return canny
 
-img = cv2.imread("/Users/por/Documents/Project_Image/test photo/IMG_0018.jpg")
+img = cv2.imread("test photo/IMG_0018.jpg")
 #img = cv2.resize(img,(1344,1008))
 img = img[1512:2016,0:2690]
 processed_img = conventImage(img)
