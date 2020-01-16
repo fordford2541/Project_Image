@@ -4,7 +4,9 @@ This's an image processing project.
 ### Python
 [Download](https://www.python.org/downloads/).
 
-Run these command on console `cd %path%` at python installed location.
+Run these command on console `cd %path%` at python installed location that have pip.exe
+
+default`C:\Python27\Scripts`.
 ### Opencv
 [detail](https://pypi.org/project/opencv-contrib-python/)
 ```
