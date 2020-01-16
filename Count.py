@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 def conventImage(Image):
     gray = cv2.cvtColor(Image,cv2.COLOR_RGB2GRAY)
-    blur = cv2.GaussianBlur(gray,(1,1),0)
+    blur = cv2.GaussianBlur(gray,(3,3),0)
     canny = cv2.Canny(blur,100,200)
     #canny = cv2.morphologyEx(canny,cv2.MORPH_OPEN,(3,3))
     #canny = cv2.morphologyEx(canny,cv2.MORPH_CLOSE,(3,3))
