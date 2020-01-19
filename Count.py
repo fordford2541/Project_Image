@@ -16,7 +16,7 @@ def conventImage(Image):
 
 img = cv2.imread("test photo/IMG_0038.jpg")
 #img = cv2.resize(img,(1344,1008))
-img = img[1512:2016,0:2690]
+img = img[1512:2016,0:4032]
 processed_img = conventImage(img)
 original_img = img.copy()
 
@@ -36,7 +36,7 @@ for contour in contours:
         #print(contour)
         if area < 5000 or area > 55000:
             continue
-        cv2.imshow("License_Detected :",license_img)
+        cv2.imshow("License detected",license_img)
         cv2.drawContours(img,contours,-1,(0,0,255),2)
         gray_license = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
         th_license = cv2.adaptiveThreshold(gray_license,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,155,1)
@@ -44,7 +44,11 @@ for contour in contours:
         #text = pytesseract.image_to_string(th_license)
         #print(text)
 
-cv2.imshow("test",processed_img)
-cv2.imshow("Image",img)
+cv2.imshow("Image",original_img)
+cv2.imshow("Contour processing",processed_img)
+cv2.imshow("Image processed",img)
+cv2.moveWindow("Contour processing", 0,230)
+cv2.moveWindow("Image processed", 0,440)
+cv2.moveWindow("License detected", 0,650)
 cv2.waitKey(0)
 
