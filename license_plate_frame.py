@@ -5,7 +5,7 @@ import pytesseract
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread("test photo/IMG_0026.jpg",cv2.IMREAD_COLOR)
+img = cv2.imread("Test photo/1/1_200121_0001.jpg",cv2.IMREAD_COLOR)
 
 
 

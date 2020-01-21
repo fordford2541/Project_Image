@@ -22,3 +22,8 @@ pip install pytesseract
 ```
 pip install -U matplotlib
 ```
+### imutils
+[detail](https://pypi.org/project/imutils/)
+```
+pip install imutils
+```
