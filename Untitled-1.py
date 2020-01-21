@@ -2,9 +2,10 @@ import cv2
 import imutils
 import numpy as np
 import pytesseract
+import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('IMG_0026.jpg',cv2.IMREAD_COLOR)
+img = cv2.imread("test photo/IMG_0026.jpg",cv2.IMREAD_COLOR)
 
 
 
@@ -32,7 +33,7 @@ for c in cnts:
  # we can assume that we have found our screen
   if len(approx) == 4:
     area = cv2.contourArea(c)
-    if area < 5000 or area > 25000:
+    if area < 10000 or area > 25000:
       continue
     screenCnt = approx
     cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
@@ -72,6 +73,8 @@ img = cv2.resize(img, (1344,1008) )
 cv2.imshow('image',img)
 #cv2.imshow('Cropped',Cropped)
 print(counter)
+plt.hist(img.ravel(), 256, [0, 256])
+plt.show()
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
