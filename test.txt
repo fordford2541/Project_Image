@@ -1,4 +1,0 @@
-import cv2
-img = cv2.inread("C:\Users\Admin\Desktop\Project Image\test photo\IMG_20190912_120749.jpg")
-cv2.imshow('Image',img)
-cv2.waitkey(0)
