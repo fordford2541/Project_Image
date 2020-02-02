@@ -14,15 +14,16 @@ def conventImage(Image):
     #canny = cv2.Laplacian(canny,cv2.CV_64FC4)
     return canny
 
-img = cv2.imread("IMG_0021.jpg")
+img = cv2.imread("test photo/raw/IMG_0034.jpg")
 #img = cv2.resize(img,(1344,1008))
-img = img[1512:2016,0:2690]
+img = img[1512:2016,0:100]
+cv2.imshow('show',img)
 processed_img = conventImage(img)
 original_img = img.copy()
 
 contour_img = processed_img.copy()
 
-contours, hierarchy = cv2.findContours(contour_img,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+contours, hierarchy = cv2.findContours(contour_img,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 contours = sorted(contours,key=cv2.contourArea,reverse=True)[:10]
 
 for contour in contours:
