@@ -14,7 +14,7 @@ def conventImage(Image):
     #canny = cv2.Laplacian(canny,cv2.CV_64FC4)
     return canny
 
-img = cv2.imread("IMG_0021.jpg")
+img = cv2.imread("IMG_0020.jpg")
 #img = cv2.resize(img,(1344,1008))
 img = img[1512:2016,0:2690]
 processed_img = conventImage(img)
@@ -22,7 +22,7 @@ original_img = img.copy()
 
 contour_img = processed_img.copy()
 
-contours, hierarchy = cv2.findContours(contour_img,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+contours, hierarchy = cv2.findContours(contour_img,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 contours = sorted(contours,key=cv2.contourArea,reverse=True)[:10]
 
 for contour in contours:
@@ -40,9 +40,9 @@ for contour in contours:
         cv2.drawContours(img,contours,-1,(0,0,255),2)
         gray_license = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
         th_license = cv2.adaptiveThreshold(gray_license,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,155,1)
-        #config_img = ('-l tha --oem 1 --tessdata-dir --psm 4')
-        #text = pytesseract.image_to_string(th_license)
-        #print(text)
+        config_img = ('-l tha --oem 1 --tessdata-dir --psm 4')
+        text = pytesseract.image_to_string(th_license)
+        print(text)
 
 cv2.imshow("test",processed_img)
 cv2.imshow("Image",img)
