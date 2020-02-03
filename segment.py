@@ -1,26 +1,15 @@
 import cv2
-import numpy as np 
-# Read the images
-foreground = cv2.imread("IMG_0029.jpg")
-background = cv2.imread("IMG_0029_1.png")
-alpha = cv2.imread("puppets_alpha.png")
- 
-# Convert uint8 to float
-foreground = foreground.astype(float)
-background = background.astype(float)
- 
-# Normalize the alpha mask to keep intensity between 0 and 1
-alpha = alpha.astype(float)/255
- 
-# Multiply the foreground with the alpha matte
-foreground = cv2.multiply(alpha, foreground)
- 
-# Multiply the background with ( 1 - alpha )
-background = cv2.multiply(1.0 - alpha, background)
- 
-# Add the masked foreground and background.
-outImage = cv2.add(foreground, background)
- 
-# Display image
-cv2.imshow("outImg", outImage/255)
+import numpy as np
+
+camera = cv2.imread("C:/Users/Admin/Desktop/Project_Image/test photo/raw/IMG_0029.jpg")
+
+car_cascade = cv2.CascadeClassifier('cars.xml')
+
+grayvideo = cv2.cvtColor(camera,cv2.COLOR_BGR2GRAY)
+cars = car_cascade.detectMultiScale(grayvideo, 1.1, 1)
+for (x,y,w,h) in cars:
+    cv2.rectangle(camera,(x,y),(x+w,y+h),(0,0,255),2)
+    cv2.imshow("video",camera)
 cv2.waitKey(0)
+camera.release()
+cv2.destroyAllWindows()
