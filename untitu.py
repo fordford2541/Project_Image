@@ -6,7 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/raw/IMG_0037.jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/raw/IMG_0026.jpg',cv2.IMREAD_COLOR)
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(15,15))
@@ -18,7 +18,10 @@ cl2 = cv2.resize(cl1,(1344,1008))
 gray_blur = cv2.GaussianBlur(cl1 ,(3,3),0)
 #cv2.imshow('gray',gray)
 edged = cv2.Canny(gray_blur, 30, 200) #Perform Edge detection
+dilation = cv2.dilate(edged,np.ones((3,3),np.uint8),iterations=1)
+erosion = cv2.erode(dilation,np.ones((3,3),np.uint8),iterations=1)
 
+cv2.imshow("edage",cv2.resize(erosion,(1344,1008)))
 # find contours in the edged image, keep only the largest
 # ones, and initialize our screen contour
 cnts = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -47,7 +50,20 @@ for c in cnts:
     x,y,w,h = cv2.boundingRect(c)
     license_img = img[y:y+h,x:x+w]
     license_list.append(license_img)
-    cv2.imshow("License_Detected :",license_img)
+    #cv2.imshow("License_Detected :",license_img)
+    im = 255 - license_img
+    # Calculate horizontal projection
+    proj = np.sum(im,1)
+    m = np.max(proj)
+    w = 500
+    result = np.zeros((proj.shape[0],500))
+
+    # Draw a line for each row
+    for row in range(im.shape[0]):
+      cv2.line(result, (0,row), (int(proj[row]*w/m),row), (255,255,255), 1)
+
+    # Save result
+    cv2.imshow('result', result)
     counter +=1
     if 0 < x < 1344 and left == 0:
       left += 1
@@ -66,10 +82,13 @@ else:
   detected = 1
 if left is not None:
   print(left)
+  #cv2.imshow('left',license_list[0])
 if center is not None:
   print(center)
+  #cv2.imshow('center',license_list[1])
 if right is not None:
   print(right)
+  #cv2.imshow('right',license_list[2])
 #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
 
 # Masking the part other than the number plate
