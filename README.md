@@ -6,7 +6,7 @@ This's an image processing project.
 
 Run these command on console `cd %path%` at python installed location that have pip.exe
 
-default`C:\Python27\Scripts`.
+default`C:\Users\<user>\AppData\Local\Programs\Python\Python38-32\Scripts`.
 ### Opencv
 [detail](https://pypi.org/project/opencv-contrib-python/)
 ```
