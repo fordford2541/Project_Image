@@ -19,7 +19,7 @@ gray_blur = cv2.GaussianBlur(cl1 ,(3,3),0)
 #cv2.imshow('gray',gray)
 edged = cv2.Canny(gray_blur, 30, 200) #Perform Edge detection
 dilation = cv2.dilate(edged,np.ones((3,3),np.uint8),iterations=1)
-erosion = cv2.erode(dilation,np.ones((3,3),np.uint8),iterations=1)
+erosion = cv2.erode(dilation,np.ones((3,3),np.uint8),iterations=5)
 
 cv2.imshow("edage",cv2.resize(erosion,(1344,1008)))
 # find contours in the edged image, keep only the largest
@@ -51,19 +51,7 @@ for c in cnts:
     license_img = img[y:y+h,x:x+w]
     license_list.append(license_img)
     #cv2.imshow("License_Detected :",license_img)
-    im = 255 - license_img
-    # Calculate horizontal projection
-    proj = np.sum(im,1)
-    m = np.max(proj)
-    w = 500
-    result = np.zeros((proj.shape[0],500))
-
-    # Draw a line for each row
-    for row in range(im.shape[0]):
-      cv2.line(result, (0,row), (int(proj[row]*w/m),row), (255,255,255), 1)
-
-    # Save result
-    cv2.imshow('result', result)
+    
     counter +=1
     if 0 < x < 1344 and left == 0:
       left += 1
