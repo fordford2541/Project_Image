@@ -19,7 +19,7 @@ gray_blur = cv2.GaussianBlur(cl1 ,(3,3),0)
 #cv2.imshow('gray',gray)
 edged = cv2.Canny(gray_blur, 30, 200) #Perform Edge detection
 dilation = cv2.dilate(edged,np.ones((3,3),np.uint8),iterations=1)
-erosion = cv2.erode(dilation,np.ones((3,3),np.uint8),iterations=5)
+erosion = cv2.erode(dilation,np.ones((3,3),np.uint8),iterations=1)
 
 cv2.imshow("edage",cv2.resize(erosion,(1344,1008)))
 # find contours in the edged image, keep only the largest
