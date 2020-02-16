@@ -6,7 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/raw/IMG_0026.jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/raw/IMG_0029.jpg',cv2.IMREAD_COLOR)
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(15,15))
@@ -26,7 +26,7 @@ cv2.imshow("edage",cv2.resize(erosion,(1344,1008)))
 # ones, and initialize our screen contour
 cnts = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
-cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:10]
+cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:30]
 screenCnt = None
 counter = 0
 left = 0

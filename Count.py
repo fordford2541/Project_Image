@@ -16,7 +16,7 @@ def conventImage(Image):
     return canny
 
 img = cv2.imread("test photo/raw/IMG_0029.jpg")
-#img = cv2.resize(img,(1344,1008))
+img = cv2.resize(img,(1344,1008))
 #img = img[1512:2016,1344:2688]
 #cv2.imshow('show',img)
 processed_img = conventImage(img)
@@ -24,19 +24,19 @@ original_img = img.copy()
 
 contour_img = processed_img.copy()
 
-im, contours, hierarchy = cv2.findContours(contour_img,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+im, contours, hierarchy = cv2.findContours(contour_img,cv2.RETR_LIST,cv2.CHAIN_APPROX_NONE)
 contours = sorted(contours,key=cv2.contourArea,reverse=True)[:50]
 
 for contour in contours:
     p = cv2.arcLength(contour,True)
-    approx = cv2.approxPolyDP(contour,0.02*p,True)
-
+    approx = cv2.approxPolyDP(contour,0.2*p,True)
+    
     if len(approx) == 4:
         x,y,w,h = cv2.boundingRect(contour)
         license_img = original_img[y:y+h,x:x+w]
         area = cv2.contourArea(contour)
-        #print(contour)
-        if area < 5000 or area > 55000:
+        #print(x,y,w,h)
+        if area < 2220 or area > 30000:
             continue
         cv2.imshow("License_Detected :",license_img)
         cv2.drawContours(img,contours,-1,(0,0,255),2)
