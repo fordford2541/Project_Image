@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 
-camera = cv2.imread("C:/Users/Admin/Desktop/Project_Image/test photo/raw/IMG_0029.jpg")
+camera = cv2.imread("C:/Users/Admin/Desktop/Project_Image/test photo/720p/IMG_20200217_10.jpg")
 
-car_cascade = cv2.CascadeClassifier('cars.xml')
+car_cascade = cv2.CascadeClassifier('C:/Users/Admin/Desktop/Project_Image/myhaar.xml')
 
 grayvideo = cv2.cvtColor(camera,cv2.COLOR_BGR2GRAY)
 cars = car_cascade.detectMultiScale(grayvideo, 1.1, 1)

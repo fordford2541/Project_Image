@@ -6,27 +6,26 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/raw/IMG_0026.jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/720p/IMG_20200217_10.jpg',cv2.IMREAD_COLOR)
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
-cl2 = cv2.resize(cl1,(1344,1008))
 #cv2.imshow('show',cl2)
 #gray = cv2.bilateralFilter(gray, 11, 17, 17) #Blur to reduce noise
 #cv2.imshow('image',img)
 gray_blur = cv2.GaussianBlur(cl1 ,(3,3),0)
 #cv2.imshow('gray',gray)
-edged = cv2.Canny(gray_blur, 30, 200) #Perform Edge detection
-dilation = cv2.dilate(edged,np.ones((3,3),np.uint8),iterations=1)
-erosion = cv2.erode(dilation,np.ones((3,3),np.uint8),iterations=1)
+edged = cv2.Canny(gray_blur, 30, 150) #Perform Edge detection
+#dilation = cv2.dilate(edged,np.ones((3,3),np.uint8),iterations=2)
+#erosion = cv2.erode(dilation,np.ones((3,3),np.uint8),iterations=2)
 
-cv2.imshow("edage",cv2.resize(erosion,(1344,1008)))
+cv2.imshow("edage",edged)
 # find contours in the edged image, keep only the largest
 # ones, and initialize our screen contour
 cnts = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
-cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:30]
+#cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:30]
 screenCnt = None
 counter = 0
 left = 0
@@ -43,8 +42,8 @@ for c in cnts:
  # we can assume that we have found our screen
   if len(approx) == 4:
     area = cv2.contourArea(c)
-    if area < 10000 or area > 90000:
-        continue
+    #if area < 1000 or area > 9000:
+        #continue
     screenCnt = approx
     cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
     x,y,w,h = cv2.boundingRect(c)
@@ -94,7 +93,6 @@ if right is not None:
 #text = pytesseract.image_to_string(Cropped)
 #print("Detected Number is:",text)
 
-img = cv2.resize(img, (1344,1008) )
 cv2.imshow('image',img)
 #cv2.imshow('Cropped',Cropped)
 #Splt.hist(img.ravel(), 256, [0, 256])
