@@ -1,8 +1,20 @@
-from PIL import Image
-import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR\tesseract.exe"
 import cv2
-img = cv2.imread('thai.png')
-#img = Image.open('thai.png')
-result = pytesseract.image_to_string(img, lang='tha')
-print(result)
+
+def main():
+    cv2.namedWindow("preview")
+    vc = cv2.VideoCapture(0)
+    if vc.isOpened():
+        rval,frame = vc.read()
+    else:
+        rval = False
+    while rval:
+        cv2.imshow("preview",frame)
+        rval,frame = vc.read()
+        key = cv2.waitKey(20)
+        if key == 27: #press 'ESC' for exit
+            cv2.destroyWindow("preview")
+            break
+    pass
+
+if __name__ == '__main__':
+    main()
