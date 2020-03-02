@@ -5,7 +5,7 @@ import pytesseract
 import matplotlib.pyplot as plt
 from PIL import Image
 
-image = cv2.imread("IMG_0022.jpg")
+image = cv2.imread("test photo/1080p/IMG_00 (1).jpg")
 gray = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
 gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(15,15))

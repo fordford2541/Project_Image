@@ -15,8 +15,7 @@ def conventImage(Image):
     #canny = cv2.Laplacian(canny,cv2.CV_64FC4)
     return canny
 
-img = cv2.imread("test photo/raw/IMG_0029.jpg")
-img = cv2.resize(img,(1344,1008))
+img = cv2.imread("test photo/1080p/IMG_00 (1).jpg")
 #img = img[1512:2016,1344:2688]
 #cv2.imshow('show',img)
 processed_img = conventImage(img)
@@ -42,6 +41,7 @@ for contour in contours:
         cv2.drawContours(img,contours,-1,(0,0,255),2)
         gray_license = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
         th_license = cv2.adaptiveThreshold(gray_license,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,155,1)
+        cv2.imshow("result",license_img)
         result = pytesseract.image_to_string(license_img, lang='tha')
         print(result)
 
