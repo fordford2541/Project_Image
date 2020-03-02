@@ -6,12 +6,11 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/1080p/IMG_00 (16).jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/1080p/IMG_00 (9).jpg',cv2.IMREAD_COLOR)
 
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
-clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(9,9))
+clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
-#cl2 = cv2.resize(cl1,(1344,1008))
 cv2.imshow('show',cl1)
 #gray = cv2.bilateralFilter(gray, 11, 17, 17) #Blur to reduce noise
 #cv2.imshow('image',img)
@@ -40,42 +39,57 @@ for c in cnts:
  # if our approximated contour has four points, then
  # we can assume that we have found our screen
   if len(approx) == 4:
-    area = cv2.contourArea(c)
     
     screenCnt = approx
     cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
     x,y,w,h = cv2.boundingRect(c)
+    area = w*h
+    if area < 2300 or area > 3000:
+        continue
+    print(w*h)
     license_img = img[y:y+h,x:x+w]
-    license_list.append(license_img)
-    cv2.imshow("License_Detected :",license_img)
+    license_img_gray = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
+    license_img_bw = cv2.adaptiveThreshold(license_img_gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,1)
+    license_list.append(license_img_bw)
+    #cv2.imshow("License_Detected :",license_img)
     
     counter +=1
-    if 0 < x < 1344 and left == 0:
+    if 0 < x < 640 and left == 0:
       left += 1
-    if 1345 < x < 2688 and center == 0:
+    if 641 < x < 1280 and center == 0:
       center += 1
-    if 2689 < x < 4032 and right == 0:
+    if 1281 < x < 1920 and right == 0:
       right += 1
     result = pytesseract.image_to_string(license_img, lang='tha')
     print(result)
     
 #for lic in len(license_list):
+aray_car = []
 if screenCnt is None:
   detected = 0
   print ("No contour detected")
 else:
   detected = 1
 if left is not None:
-  print(left)
+  aray_car.append(left)
   #cv2.imshow('left',license_list[0])
 if center is not None:
-  print(center)
+  aray_car.append(center) 
   #cv2.imshow('center',license_list[1])
 if right is not None:
-  print(right)
+  aray_car.append(right)  
   #cv2.imshow('right',license_list[2])
 #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
-
+print(aray_car)
+a = 0
+for l in license_list[0]:
+  l = l % 254
+  a += l
+print(a)
+print(license_list[0])
+cv2.imshow('list0',license_list[0])
+plt.plot(a)
+plt.show()
 # Masking the part other than the number plate
 #mask = np.zeros(gray.shape,np.uint8)
 #new_image = cv2.drawContours(mask,[screenCnt],0,255,-1,)
@@ -91,7 +105,6 @@ if right is not None:
 #text = pytesseract.image_to_string(Cropped)
 #print("Detected Number is:",text)
 
-img = cv2.resize(img, (1344,1008) )
 cv2.imshow('image',img)
 #cv2.imshow('Cropped',Cropped)
 #Splt.hist(img.ravel(), 256, [0, 256])
