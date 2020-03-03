@@ -6,8 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/1080p/IMG_00 (9).jpg',cv2.IMREAD_COLOR)
-
+img = cv2.imread('test photo/1080p/IMG_00 (14_1).jpg',cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
@@ -44,7 +43,7 @@ for c in cnts:
     cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
     x,y,w,h = cv2.boundingRect(c)
     area = w*h
-    if area < 2300 or area > 3000:
+    if area < 2300 or area > 3500:
         continue
     print(w*h)
     license_img = img[y:y+h,x:x+w]
@@ -60,9 +59,9 @@ for c in cnts:
       center += 1
     if 1281 < x < 1920 and right == 0:
       right += 1
-    result = pytesseract.image_to_string(license_img, lang='tha')
-    print(result)
-    
+    #result = pytesseract.image_to_string(license_img, lang='tha')
+    #print(result)
+print("license :",len(license_list))
 #for lic in len(license_list):
 aray_car = []
 if screenCnt is None:
