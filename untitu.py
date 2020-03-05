@@ -87,8 +87,8 @@ a = 0
 #print(a)
 #print(license_list[0])
 #cv2.imshow('list0',license_list[0])
-plt.plot(a)
-plt.show()
+#plt.plot(a)
+#plt.show()
 # Masking the part other than the number plate
 #mask = np.zeros(gray.shape,np.uint8)
 #new_image = cv2.drawContours(mask,[screenCnt],0,255,-1,)
