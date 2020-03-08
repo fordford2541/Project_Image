@@ -6,7 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/1080p/IMG_1 (16).jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/1080p/IMG_1 (35).jpg',cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
