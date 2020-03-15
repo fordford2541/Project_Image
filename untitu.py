@@ -2,7 +2,6 @@ import cv2
 import imutils
 import numpy as np
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR\tesseract.exe"
 import matplotlib.pyplot as plt
 from PIL import Image
 
@@ -59,9 +58,7 @@ for c in cnts:
       center += 1
     if 1281 < x < 1920 and right == 0:
       right += 1
-    #result = pytesseract.image_to_string(license_img, lang='tha')
-    #print(result)
-print("license :",len(license_list))
+    
 #for lic in len(license_list):
 aray_car = []
 if screenCnt is None:
