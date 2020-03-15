@@ -2,7 +2,6 @@ import cv2
 import imutils
 import numpy as np
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR\tesseract.exe"
 import matplotlib.pyplot as plt
 from PIL import Image
 
@@ -59,8 +58,6 @@ for c in cnts:
       center += 1
     if 2689 < x < 4032 and right == 0:
       right += 1
-    result = pytesseract.image_to_string(license_img, lang='tha')
-    print(result)
     
 #for lic in len(license_list):
 if screenCnt is None:
