@@ -3,9 +3,8 @@ import imutils
 import numpy as np
 import pytesseract
 import matplotlib.pyplot as plt
-from PIL import Image
 
-img = cv2.imread('test photo/1080p/IMG_1 (73).jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/1080p/IMG_1 (19).jpg',cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=-1.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
@@ -39,17 +38,28 @@ for c in cnts:
   if len(approx) == 4:
     
     screenCnt = approx
-    cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
+    
     x,y,w,h = cv2.boundingRect(c)
     area = w*h
-    if area < 2300 or area > 3500:
+    print(x,y,w,h)
+    if w < 70 or w > 100:
+      continue
+      if h < 30 or h > 50:
         continue
-    print(w*h)
+        if area < 2300 or area > 3500:
+          continue
+    #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 2)
+    cv2.rectangle(img, (x,y), (x+w,y+h), (0, 255, 0), 2)
+    #print(w*h)
     license_img = img[y:y+h,x:x+w]
     license_img_gray = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
     license_img_bw = cv2.adaptiveThreshold(license_img_gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,1)
+    kernel = np.ones((2,2),np.uint8)
+    
+    license_img_dilation = cv2.dilate(license_img_bw, kernel, iterations=1)
+    license_img_dilation = cv2.erode(license_img_dilation, kernel, iterations=1)
     license_list.append(license_img_bw)
-    #cv2.imshow("License_Detected :",license_img)
+    cv2.imshow("License_Detected :",license_img_dilation)
     
     counter +=1
     if 0 < x < 640 and left == 0:

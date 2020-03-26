@@ -6,14 +6,14 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/1080p/IMG_1 (73).jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/1080p/IMG_1 (20).jpg',cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=-1.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
 #cv2.imshow('show',cl1)
 #gray = cv2.bilateralFilter(gray, 11, 17, 17) #Blur to reduce noise
 #cv2.imshow('image',img)
-gray_blur = cv2.GaussianBlur(cl1 ,(3,3),0)
+gray_blur = cv2.GaussianBlur(gray,(3,3),0)
 #cv2.imshow('gray',gray_blur)
 edged = cv2.Canny(gray_blur, 30, 200) #Perform Edge detection
 
@@ -40,17 +40,31 @@ for c in cnts:
   if len(approx) == 4:
     
     screenCnt = approx
-    cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
+    #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
     x,y,w,h = cv2.boundingRect(c)
     area = w*h
+    print(x,y,w,h)
     if area < 2300 or area > 3500:
         continue
     print(w*h)
     license_img = img[y:y+h,x:x+w]
+    license_img = cv2.resize(license_img,(w*4,h*4))
     license_img_gray = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
     license_img_bw = cv2.adaptiveThreshold(license_img_gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,1)
-    license_list.append(license_img_bw)
-    #cv2.imshow("License_Detected :",license_img)
+    kernel = np.ones((3,3),np.uint8)
+    license_img_dilation = cv2.erode(license_img_bw, kernel, iterations=1)
+    license_img_cnts = cv2.findContours(license_img_bw.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    license_img_cnts = imutils.grab_contours(license_img_cnts)
+    license_img_cnts = sorted(license_img_cnts, key = cv2.contourArea, reverse = True)[:30]
+    cv2.imshow('license_bw',license_img_bw)
+    for l in license_img_cnts:
+      rect = cv2.boundingRect(l)
+      x_lic,y_lic,w_lic,h_lic = rect
+      area_lic = w_lic * h_lic
+      if h_lic > 55 and h_lic < 300 and w_lic > 10 and w_lic < 100:
+        print('w&h',w_lic,h_lic)
+        cv2.rectangle(license_img, (x_lic, y_lic), (x_lic+w_lic, y_lic+h_lic),(255, 0, 0),1)
+        cv2.imshow('license',license_img)
     
     counter +=1
     if 0 < x < 640 and left == 0:
@@ -60,6 +74,7 @@ for c in cnts:
     if 1281 < x < 1920 and right == 0:
       right += 1
     #result = pytesseract.image_to_string(license_img, lang='tha')
+    #cv2.imshow('result',result)
     #print(result)
 print("license :",len(license_list))
 #for lic in len(license_list):

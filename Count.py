@@ -15,7 +15,7 @@ def conventImage(Image):
     #canny = cv2.Laplacian(canny,cv2.CV_64FC4)
     return canny
 
-img = cv2.imread("test photo/1080p/IMG_00 (1).jpg")
+img = cv2.imread("test photo/1080p/IMG_1 (14).jpg")
 #img = img[1512:2016,1344:2688]
 #cv2.imshow('show',img)
 processed_img = conventImage(img)
@@ -35,8 +35,6 @@ for contour in contours:
         license_img = original_img[y:y+h,x:x+w]
         area = cv2.contourArea(contour)
         #print(x,y,w,h)
-        if area < 2220 or area > 30000:
-            continue
         cv2.imshow("License_Detected :",license_img)
         cv2.drawContours(img,contours,-1,(0,0,255),2)
         gray_license = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)

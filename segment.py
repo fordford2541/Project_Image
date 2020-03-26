@@ -1,15 +1,17 @@
-import cv2
 import numpy as np
+from vector import vector, plot_peaks
+import scipy.signal
 
-camera = cv2.imread("C:/Users/Admin/Desktop/Project_Image/test photo/1080p/IMG_00 (1).jpg")
-
-car_cascade = cv2.CascadeClassifier('C:/Users/Admin/Desktop/Project_Image/myhaar.xml')
-
-grayvideo = cv2.cvtColor(camera,cv2.COLOR_BGR2GRAY)
-cars = car_cascade.detectMultiScale(grayvideo, 1.1, 1)
-for (x,y,w,h) in cars:
-    cv2.rectangle(camera,(x,y),(x+w,y+h),(0,0,255),2)
-    cv2.imshow("video",camera)
-cv2.waitKey(0)
-camera.release()
-cv2.destroyAllWindows()
+print('Detect peaks without any filters.')
+indexes = scipy.signal.find_peaks_cwt(
+    vector,
+    np.arange(1, 4),
+    max_distances=np.arange(1, 4)*2
+)
+indexes = np.array(indexes) - 1
+print('Peaks are: %s' % (indexes))
+plot_peaks(
+    np.array(vector),
+    np.array(indexes),
+    algorithm='scipy.signal.find_peaks_cwt'
+)
