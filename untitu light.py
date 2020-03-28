@@ -6,7 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/1080p/IMG_1 (20).jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/1080p/IMG_1 (75).jpg',cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=-1.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
@@ -40,7 +40,7 @@ for c in cnts:
   if len(approx) == 4:
     
     screenCnt = approx
-    #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
+    cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
     x,y,w,h = cv2.boundingRect(c)
     area = w*h
     print(x,y,w,h)
@@ -64,6 +64,8 @@ for c in cnts:
       if h_lic > 55 and h_lic < 300 and w_lic > 10 and w_lic < 100:
         print('w&h',w_lic,h_lic)
         cv2.rectangle(license_img, (x_lic, y_lic), (x_lic+w_lic, y_lic+h_lic),(255, 0, 0),1)
+        character = license_img[y_lic:y_lic+h_lic,x_lic:x_lic+w_lic]
+        cv2.imshow('cha',character)
         cv2.imshow('license',license_img)
     
     counter +=1
