@@ -6,7 +6,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Admin\Anaconda3\Tesseract-OCR
 import matplotlib.pyplot as plt
 from PIL import Image
 
-img = cv2.imread('test photo/1080p/IMG_1 (75).jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/1080p/IMG_1 (14).jpg',cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=-1.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
@@ -40,45 +40,57 @@ for c in cnts:
   if len(approx) == 4:
     
     screenCnt = approx
-    cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
+    
     x,y,w,h = cv2.boundingRect(c)
     area = w*h
     print(x,y,w,h)
+    if w < 70 or w > 100:
+      continue
+    if h < 30 or h > 50:
+      continue
     if area < 2300 or area > 3500:
-        continue
+      continue
+    #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 1)
     print(w*h)
     license_img = img[y:y+h,x:x+w]
     license_img = cv2.resize(license_img,(w*4,h*4))
     license_img_gray = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
     license_img_bw = cv2.adaptiveThreshold(license_img_gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,1)
-    kernel = np.ones((3,3),np.uint8)
-    license_img_dilation = cv2.erode(license_img_bw, kernel, iterations=1)
+    #kernel = np.ones((3,3),np.uint8)
+    #license_img_dilation = cv2.erode(license_img_bw, kernel, iterations=1)
     license_img_cnts = cv2.findContours(license_img_bw.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     license_img_cnts = imutils.grab_contours(license_img_cnts)
     license_img_cnts = sorted(license_img_cnts, key = cv2.contourArea, reverse = True)[:30]
     cv2.imshow('license_bw',license_img_bw)
+    license_charecter = []
     for l in license_img_cnts:
       rect = cv2.boundingRect(l)
       x_lic,y_lic,w_lic,h_lic = rect
       area_lic = w_lic * h_lic
       if h_lic > 55 and h_lic < 300 and w_lic > 10 and w_lic < 100:
-        print('w&h',w_lic,h_lic)
         cv2.rectangle(license_img, (x_lic, y_lic), (x_lic+w_lic, y_lic+h_lic),(255, 0, 0),1)
         character = license_img[y_lic:y_lic+h_lic,x_lic:x_lic+w_lic]
+        result = pytesseract.image_to_string(character, lang='tha')
+        if result is not None:
+          print(result)
+          license_charecter.append(len(character))
         cv2.imshow('cha',character)
         cv2.imshow('license',license_img)
     
     counter +=1
     if 0 < x < 640 and left == 0:
       left += 1
+      license_list.append([left,license_charecter])
     if 641 < x < 1280 and center == 0:
       center += 1
+      license_list.append([center,license_charecter])
     if 1281 < x < 1920 and right == 0:
       right += 1
+      license_list.append([right,license_charecter])
     #result = pytesseract.image_to_string(license_img, lang='tha')
     #cv2.imshow('result',result)
     #print(result)
-print("license :",len(license_list))
+print("license :",license_list)
 #for lic in len(license_list):
 aray_car = []
 if screenCnt is None:

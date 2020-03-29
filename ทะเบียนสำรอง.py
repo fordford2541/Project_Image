@@ -4,7 +4,7 @@ import numpy as np
 import pytesseract
 import matplotlib.pyplot as plt
 
-img = cv2.imread('test photo/1080p/IMG_1 (19).jpg',cv2.IMREAD_COLOR)
+img = cv2.imread('test photo/1080p/IMG_1 (73).jpg',cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 clahe = cv2.createCLAHE(clipLimit=-1.0, tileGridSize=(15,15))
 cl1 = clahe.apply(gray)
@@ -41,15 +41,16 @@ for c in cnts:
     
     x,y,w,h = cv2.boundingRect(c)
     area = w*h
-    print(x,y,w,h)
+    
     if w < 70 or w > 100:
       continue
-      if h < 30 or h > 50:
-        continue
-        if area < 2300 or area > 3500:
-          continue
-    #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 2)
-    cv2.rectangle(img, (x,y), (x+w,y+h), (0, 255, 0), 2)
+    if h < 30 or h > 50:
+      continue
+    if area < 2300 or area > 3500:
+      continue
+    cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 2)
+    #cv2.rectangle(img, (x,y), (x+w,y+h), (0, 255, 0), 2)
+    print(x,y,w,h)
     #print(w*h)
     license_img = img[y:y+h,x:x+w]
     license_img_gray = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
