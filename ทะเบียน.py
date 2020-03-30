@@ -43,7 +43,7 @@ for c in cnts:
     
     x,y,w,h = cv2.boundingRect(c)
     area = w*h
-    print(x,y,w,h)
+    #print(x,y,w,h)
     if w < 70 or w > 100:
       continue
     if h < 30 or h > 50:
@@ -51,7 +51,7 @@ for c in cnts:
     if area < 2300 or area > 3500:
       continue
     #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 1)
-    print(w*h)
+    #print(w*h)
     license_img = img[y:y+h,x:x+w]
     license_img = cv2.resize(license_img,(w*4,h*4))
     license_img_gray = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
@@ -70,10 +70,10 @@ for c in cnts:
       if h_lic > 55 and h_lic < 300 and w_lic > 10 and w_lic < 100:
         cv2.rectangle(license_img, (x_lic, y_lic), (x_lic+w_lic, y_lic+h_lic),(255, 0, 0),1)
         character = license_img[y_lic:y_lic+h_lic,x_lic:x_lic+w_lic]
-        result = pytesseract.image_to_string(character, lang='tha')
-        if result is not None:
-          print(result)
-          license_charecter.append(len(character))
+        #result = pytesseract.image_to_string(character, lang='tha')
+        #if result is not None:
+          #print(result)
+        license_charecter.append(len(character))
         cv2.imshow('cha',character)
         cv2.imshow('license',license_img)
     
