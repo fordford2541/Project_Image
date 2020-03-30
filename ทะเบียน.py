@@ -53,6 +53,8 @@ for c in cnts:
     #cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 1)
     #print(w*h)
     license_img = img[y:y+h,x:x+w]
+    license_show = img[y:y+h,x:x+w]
+    license_show = cv2.resize(license_show,(w*4,h*4))
     license_img = cv2.resize(license_img,(w*4,h*4))
     license_img_gray = cv2.cvtColor(license_img,cv2.COLOR_BGR2GRAY)
     license_img_bw = cv2.adaptiveThreshold(license_img_gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,1)
@@ -62,6 +64,7 @@ for c in cnts:
     license_img_cnts = imutils.grab_contours(license_img_cnts)
     license_img_cnts = sorted(license_img_cnts, key = cv2.contourArea, reverse = True)[:30]
     cv2.imshow('license_bw',license_img_bw)
+    cv2.imshow('license_show',license_show)
     license_charecter = []
     for l in license_img_cnts:
       rect = cv2.boundingRect(l)
