@@ -4,17 +4,17 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
 #Read Image
-I = cv2.imread('C:\\Users\\nior\\Documents\\GitHub\\Project_Image\\Test photo\\1080p\\IMG_1 (19).jpg',cv2.IMREAD_COLOR)
+I = cv2.imread('C:\\Users\\nior\\Documents\\GitHub\\Project_Image\\Test photo\\1080p\\IMG_1 (70).jpg',cv2.IMREAD_COLOR)
 #input = I
 I = np.array(I)
 #I = cv2.resize(I, (1344,1008))
-cv2.imshow('1',I)
+cv2.imshow('1:Source',I)
 #I = cv2.process(input)
 #Extract Y Component (Convert an Image to Gray)
 Igray = cv2.cvtColor(I,cv2.COLOR_RGB2GRAY)
 rows = Igray.shape[0]
 cols = Igray.shape[1]
-cv2.imshow('2',Igray)
+cv2.imshow('2:Gray',Igray)
 ##Dilate and Erode Image in order to remove noise
 #############################################################
 #Idilate = Igray
@@ -33,7 +33,7 @@ Idilate = cv2.dilate(Igray,kernel,iterations=1)
 I = Idilate
 #############################################################
 cv2.imshow('3:Dilated',Idilate)
-cv2.imshow('4',I)
+cv2.imshow('4:Filtered',I)
 difference=0
 sum=0
 total_sum=0
@@ -168,7 +168,7 @@ plt.ylabel('Differnce ->')
 plt.title('Histogram after Filtering')
 plt.subplots_adjust(hspace=1)
 plt.show()
-cv2.imshow("I",I)
+cv2.imshow("I:Cut",I)
 cv2.waitKey(0)
 ##Find probable candidates for number plate
 
@@ -186,9 +186,9 @@ Idilate = cv2.dilate(Igray,kernel,iterations=1)
 imerode = cv2.erode(Idilate,kernel,iterations=1)
 I = imerode
 
-cv2.imshow('2',Igray)
+cv2.imshow('2:Gray',Igray)
 cv2.imshow('3 Dilated Image',Idilate)
-cv2.imshow('4',I)
+cv2.imshow('4:Filtered',I)
 difference=0
 sum=0
 total_sum=0
@@ -221,7 +221,7 @@ for i in range(1,cols,1):
     
 average = total_sum / cols
 ##Plot the histogram for analysis
-plt.subplot(414)
+plt.subplot(311)
 plt.plot(horz1)
 plt.xlabel('Column Number ->')
 plt.ylabel('Difference ->')
@@ -280,6 +280,7 @@ plt.plot(peaks, horz[peaks], "vg"); plt.plot(horz)
 plt.title('Peak spot')
 plt.show()
 
+print('Total cars:',peaks)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
