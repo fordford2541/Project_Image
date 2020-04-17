@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
 #Read Image
-I = cv2.imread('C:\\Users\\nior\\Documents\\GitHub\\Project_Image\\Test photo\\1080p\\IMG_1 (70).jpg',cv2.IMREAD_COLOR)
+I = cv2.imread('test photo/1080p/IMG_1 (20).jpg',cv2.IMREAD_COLOR)
 #input = I
 I = np.array(I)
 #I = cv2.resize(I, (1344,1008))
@@ -274,12 +274,33 @@ plt.title('Horz Graph')
 plt.show()
 ##Find peaks
 print('Detecting peak point...')
+left = 0
+center = 0 
+right = 0
+total = []
 peaks, _=find_peaks(horz,prominence=1)
+
 
 plt.plot(peaks, horz[peaks], "vg"); plt.plot(horz)
 plt.title('Peak spot')
 plt.show()
-
+left = 0
+center = 0 
+right = 0
+for p in peaks:   
+    if 0 < p < 640 and left == 0:
+        left += 1
+    if 641 < p < 1280 and center == 0:
+        center += 1
+    if 1281 < p < 1920 and right == 0:
+        right += 1
+if left is not None:
+    total.append(left)
+if center is not None:
+    total.append(center)
+if right is not None:
+    total.append(right)
+print(total)
 print('Total cars:',peaks)
 
 cv2.waitKey(0)
