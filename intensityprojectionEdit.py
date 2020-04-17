@@ -284,9 +284,6 @@ peaks, _=find_peaks(horz,prominence=1)
 plt.plot(peaks, horz[peaks], "vg"); plt.plot(horz)
 plt.title('Peak spot')
 plt.show()
-left = 0
-center = 0 
-right = 0
 for p in peaks:   
     if 0 < p < 640 and left == 0:
         left += 1
