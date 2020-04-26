@@ -4,17 +4,17 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
 #Read Image
-I = cv2.imread('test photo/1080p/IMG_1 (20).jpg',cv2.IMREAD_COLOR)
+I = cv2.imread('test photo/1080p/IMG_1 (100).jpg',cv2.IMREAD_COLOR)
 #input = I
 I = np.array(I)
 #I = cv2.resize(I, (1344,1008))
-cv2.imshow('1:Source',I)
+##cv2.imshow('1:Source',I)
 #I = cv2.process(input)
 #Extract Y Component (Convert an Image to Gray)
 Igray = cv2.cvtColor(I,cv2.COLOR_RGB2GRAY)
 rows = Igray.shape[0]
 cols = Igray.shape[1]
-cv2.imshow('2:Gray',Igray)
+##cv2.imshow('2:Gray',Igray)
 ##Dilate and Erode Image in order to remove noise
 #############################################################
 #Idilate = Igray
@@ -32,8 +32,8 @@ kernel = np.ones((3,3),np.uint8)
 Idilate = cv2.dilate(Igray,kernel,iterations=1)
 I = Idilate
 #############################################################
-cv2.imshow('3:Dilated',Idilate)
-cv2.imshow('4:Filtered',I)
+##cv2.imshow('3:Dilated',Idilate)
+##cv2.imshow('4:Filtered',I)
 difference=0
 sum=0
 total_sum=0
@@ -82,7 +82,7 @@ plt.xlabel('Row Number ->')
 plt.ylabel('Difference ->')
 plt.title('Histogram after passing through Low Pass Filter')
 plt.subplots_adjust(hspace=1)
-plt.show()
+##plt.show()
 ##Filter out Horizontal Histogram Values by applying Dynamic Threshold
 #print("Filter out Horizontal Histogram")
 #for i in range(1,cols,1):
@@ -167,13 +167,13 @@ plt.xlabel('rows Number ->')
 plt.ylabel('Differnce ->')
 plt.title('Histogram after Filtering')
 plt.subplots_adjust(hspace=1)
-plt.show()
-cv2.imshow("I:Cut",I)
+##plt.show()
+##cv2.imshow("I:Cut",I)
 cv2.waitKey(0)
 ##Find probable candidates for number plate
 
 ##Region of interest extraction
-cv2.imshow('1',I)
+##cv2.imshow('1',I)
 Isc = I
 Igray = I
 rows = Igray.shape[0]
@@ -186,9 +186,9 @@ Idilate = cv2.dilate(Igray,kernel,iterations=1)
 imerode = cv2.erode(Idilate,kernel,iterations=1)
 I = imerode
 
-cv2.imshow('2:Gray',Igray)
-cv2.imshow('3 Dilated Image',Idilate)
-cv2.imshow('4:Filtered',I)
+##cv2.imshow('2:Gray',Igray)
+##cv2.imshow('3 Dilated Image',Idilate)
+##cv2.imshow('4:Filtered',I)
 difference=0
 sum=0
 total_sum=0
@@ -260,7 +260,7 @@ plt.xlabel('Column Number ->')
 plt.ylabel('Difference ->')
 plt.title('Histogram after Filtering')
 plt.subplots_adjust(hspace=1)
-plt.show()
+##plt.show()
 ## Smoothing Data by apply moving average filter
 print('Smoothing data...')
 modes = ['full','same','valid']
@@ -271,7 +271,7 @@ for m in modes:
     
 plt.legend(modes)
 plt.title('Horz Graph')
-plt.show()
+##plt.show()
 ##Find peaks
 print('Detecting peak point...')
 left = 0
@@ -283,7 +283,7 @@ peaks, _=find_peaks(horz,prominence=1)
 
 plt.plot(peaks, horz[peaks], "vg"); plt.plot(horz)
 plt.title('Peak spot')
-plt.show()
+##plt.show()
 for p in peaks:   
     if 0 < p < 640 and left == 0:
         left += 1
