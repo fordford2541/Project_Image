@@ -89,8 +89,9 @@ if center is not None:
   array_car.append(center) 
 if right is not None:
   array_car.append(right)
+sum_array = array_car[0]+array_car[1]+array_car[2]
 print('Car position   :',array_car)
-print('Number of cars :',len(array_car))
+print('Number of cars :',sum_array)
 
 
 cv2.imshow('image show',img_show)
