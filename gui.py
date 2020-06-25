@@ -82,7 +82,7 @@ def floor1():
     Label(L00, image = f1p4, height = '270', width = '480').grid(row = 1, column = 0)
     Label(L00, image = f1p5, height = '270', width = '480').grid(row = 1, column = 1)
     Label(L00, image = f1p6, height = '270', width = '480').grid(row = 1, column = 2)
-    Label(L21, text = '  1 Floor  ').grid(row = 1, column = 0)
+    Label(L21, text = '  3 Floor  ').grid(row = 1, column = 0)
     Button(L01, text = 'Count Car', command = count_floor1, width = '15').grid(row = 10, column = 0)
     
     Button(L20, text = ' ', width = '33').grid(row = 0, column = 0)
@@ -120,7 +120,7 @@ def floor3():
     Label(L00, image = f3p4, height = '270', width = '480').grid(row = 1, column = 0)
     Label(L00, image = f3p5, height = '270', width = '480').grid(row = 1, column = 1)
     Label(L00, image = f3p6, height = '270', width = '480').grid(row = 1, column = 2) 
-    Label(L21, text = '  3 Floor  ').grid(row = 1, column = 0)
+    Label(L21, text = '  1 Floor  ').grid(row = 1, column = 0)
     Button(L01, text = 'Count Car', command = count_floor3, width = '15').grid(row = 10, column = 0)
     
     Button(L20, text = ' ', width = '33').grid(row = 0, column = 0)
@@ -162,9 +162,9 @@ def count_floor3():
 total = StringVar()
 
 Label(L01, text = 'Select floor').grid(row = 0, column = 0)
-Button(L01, text = '1 Floor', width = '15', command=floor1).grid(row = 1, column = 0)
+Button(L01, text = '3 Floor', width = '15', command=floor1).grid(row = 1, column = 0)
 Button(L01, text = '2 Floor', width = '15', command=floor2).grid(row = 2, column = 0)
-Button(L01, text = '3 Floor', width = '15', command=floor3).grid(row = 3, column = 0)
+Button(L01, text = '1 Floor', width = '15', command=floor3).grid(row = 3, column = 0)
 Label(L01, text = ' ').grid(row = 4, column = 0)
 Label(L01, text = ' ').grid(row = 5, column = 0)
 Label(L01, text = ' ').grid(row = 6, column = 0)
